@@ -1,32 +1,36 @@
 import products
 import store
 
+def print_header(headline):
+    print("\n=================================================")
+    print(headline)
+    print("=================================================\n")
 
 def start(best_buy):
     while True:
-        print("\n=================================================")
-        print("Welcome to BestBuy store\n=================================================")
-        print("\n1. List all products in store")
+        # show menu
+        print_header("Welcome to BestBuy store")
+        print("1. List all products in store")
         print("2. Show total amount in store")
         print("3. Make an order")
         print("4. Quit")
 
         choice = input("Please choose an option: ")
 
+        # choice 1 -> show information of all products
         if choice == "1":
-            print("\n=================================================")
-            print("Products in store\n=================================================")
+            print_header("Products in store")
             for product in best_buy.get_all_products():
                 product.show()
 
+        # choice 2 -> show total amount of all products
         elif choice == "2":
-            print("\n=================================================")
-            print("Total amount in store\n=================================================")
+            print_header("Total amount in store")
             print(f"Total items in store: {best_buy.get_total_quantity()}")
 
+        # choice 3 -> place order
         elif choice == "3":
-            print("\n=================================================")
-            print("Place your order\n=================================================")
+            print_header("Place your order")
             shopping_list = best_buy.get_all_products()
 
             for index, product in enumerate(shopping_list, start=1):

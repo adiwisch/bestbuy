@@ -2,21 +2,28 @@ from products import Product
 
 
 class Store:
+    # constructor, initialize with products
     def __init__(self, products):
         self.products = products
 
+    # add a product
     def add_product(self, product):
         self.products.append(product)
 
+    # remove a product
     def remove_product(self, product):
         self.products.remove(product)
 
+    # get sum of all product quantities
     def get_total_quantity(self) -> int:
         return sum(product.get_quantity() for product in self.products)
 
+    # get a list of all products
     def get_all_products(self) -> list[Product]:
         return [product for product in self.products if product.is_active()]
 
+    # order a list of products, return total price
+    # check if product is present in store
     def order(self, shopping_list) -> float:
         total_price = 0.0
 

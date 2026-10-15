@@ -1,4 +1,5 @@
 class Product:
+    # constructor, check and set given parameters, set product active
     def __init__(self, name, price, quantity):
         if not name or not name.strip():
             raise ValueError("Product name cannot be empty.")
@@ -12,9 +13,11 @@ class Product:
         self.quantity = quantity
         self.active = True
 
+    # get quantity
     def get_quantity(self) -> int:
         return self.quantity
 
+    # set quantity
     def set_quantity(self, quantity):
         if quantity < 0:
             raise ValueError("Quantity cannot be negative.")
@@ -24,21 +27,27 @@ class Product:
         if self.quantity == 0:
             self.deactivate()
 
+    # return active state
     def is_active(self) -> bool:
         return self.active
 
+    # set active to true
     def activate(self):
         self.active = True
 
+    # set active to false
     def deactivate(self):
         self.active = False
 
+    # print product information
     def show(self):
         print(
             f"{self.name}, Price: {self.price:g}, "
             f"Quantity: {self.quantity}"
         )
 
+    # reduce quantity by given amount, return total price
+    # check active state and quantity values
     def buy(self, quantity) -> float:
         if not self.active:
             raise ValueError("Product is not active.")

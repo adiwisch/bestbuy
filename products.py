@@ -1,5 +1,5 @@
 class Product:
-    # constructor, check and set given parameters, set product active
+    """Product class, stores name, price and quantity"""
     def __init__(self, name, price, quantity):
         if not name or not name.strip():
             raise ValueError("Product name cannot be empty.")
@@ -13,12 +13,12 @@ class Product:
         self.quantity = quantity
         self.active = True
 
-    # get quantity
     def get_quantity(self) -> int:
+        """Returns quantity of product"""
         return self.quantity
 
-    # set quantity
     def set_quantity(self, quantity):
+        """Sets quantity of product"""
         if quantity < 0:
             raise ValueError("Quantity cannot be negative.")
 
@@ -27,28 +27,29 @@ class Product:
         if self.quantity == 0:
             self.deactivate()
 
-    # return active state
     def is_active(self) -> bool:
+        """Returns whether product is active"""
         return self.active
 
-    # set active to true
     def activate(self):
+        """Activate product"""
         self.active = True
 
-    # set active to false
     def deactivate(self):
+        """Deactivate product"""
         self.active = False
 
-    # print product information
     def show(self):
+        """Show product information"""
         print(
             f"{self.name}, Price: {self.price:g}, "
             f"Quantity: {self.quantity}"
         )
 
-    # reduce quantity by given amount, return total price
-    # check active state and quantity values
     def buy(self, quantity) -> float:
+        """Buy product - reduce quantity by given amount, return total price
+
+        check active state and reasonable quantity value"""
         if not self.active:
             raise ValueError("Product is not active.")
         if quantity <= 0:
@@ -63,6 +64,7 @@ class Product:
 
 
 def main():
+    """Main function for testing purposes"""
     bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
     mac = Product("MacBook Air M2", price=1450, quantity=100)
 

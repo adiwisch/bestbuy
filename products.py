@@ -42,15 +42,18 @@ class Product:
         """Deactivate product"""
         self.active = False
 
-    def show(self):
-        """Show product information"""
-        print(
-            f"{self.name}, Price: {self.price:g}, "
-            f"Quantity: {self.quantity}"
+    def __str__(self):
+        promotion_info = (
+            f", Promotion: {self.promotion.name}"
+            if self.promotion
+            else ""
         )
 
-        if self.promotion:
-            print(f"Promotion: {self.promotion.name}")
+        return (
+            f"{self.name}, Price: ${self.price} "
+            f"Quantity:{self.quantity}"
+            f"{promotion_info}"
+        )
 
     def buy(self, quantity) -> float:
         """Buy product - reduce quantity by given amount, return total price
@@ -72,13 +75,35 @@ class Product:
 
         return float(total_price)
 
-    def get_promotion(self):
-        """Returns promotion information"""
-        return self.promotion
+    @property
+    def price(self):
+        return self._price
 
-    def set_promotion(self, promotion: Promotion):
-        """Sets promotion information"""
-        self.promotion = promotion
+    @price.setter
+    def price(self, value):
+        if value < 0:
+            raise ValueError("Price cannot be negative.")
+        self._price = value
+
+    @property
+    def promotion(self):
+        return self._promotion
+
+    @promotion.setter
+    def promotion(self, value):
+        if value is not None and not isinstance(value, Promotion):
+            raise TypeError("Promotion must be a Promotion instance or None.")
+        self._promotion = value
+
+    def __gt__(self, other):
+        if not isinstance(other, Product):
+            return NotImplemented
+        return self.price > other.price
+
+    def __lt__(self, other):
+        if not isinstance(other, Product):
+            return NotImplemented
+        return self.price < other.price
 
 class NonStockedProduct(Product):
     """NonStockedProduct class (for something like licenses), stores name and price

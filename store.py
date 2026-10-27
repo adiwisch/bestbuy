@@ -37,6 +37,15 @@ class Store:
 
         return total_price
 
+    def __contains__(self, product):
+        return product in self.products
+
+    def __add__(self, other):
+        if not isinstance(other, Store):
+            return NotImplemented
+
+        return Store(self.products + other.products)
+
 
 def main():
     """Main function for testing purposes"""

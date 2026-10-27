@@ -1,3 +1,5 @@
+"""This module contains tests for the BestBuy store."""
+
 import pytest
 from products import Product
 
@@ -8,7 +10,7 @@ def test_create_product():
 
     assert product.name == "MacBook Air M2"
     assert product.price == 1450
-    assert product.get_quantity() == 100
+    assert product.quantity == 100
     assert product.is_active() is True
 
 
@@ -16,11 +18,10 @@ def test_create_product_with_invalid_details():
     """Test that invalid product details raise exceptions."""
 
     # Empty name
-    with pytest.raises(Exception):
+    with pytest.raises(ValueError):
         Product("", price=1450, quantity=100)
-
     # Negative price
-    with pytest.raises(Exception):
+    with pytest.raises(ValueError):
         Product("MacBook Air M2", price=-10, quantity=100)
 
 
@@ -30,7 +31,7 @@ def test_product_becomes_inactive_when_quantity_is_zero():
 
     product.buy(1)
 
-    assert product.get_quantity() == 0
+    assert product.quantity == 0
     assert product.is_active() is False
 
 
@@ -40,7 +41,7 @@ def test_buy_product():
 
     total_price = product.buy(2)
 
-    assert product.get_quantity() == 98
+    assert product.quantity == 98
     assert total_price == 2900
 
 
@@ -51,5 +52,4 @@ def test_buy_more_than_available_quantity():
     with pytest.raises(Exception):
         product.buy(6)
 
-    assert product.get_quantity() == 5
-
+    assert product.quantity == 5

@@ -1,6 +1,7 @@
+"""This module defines menu and behaviour of the BestBuy store"""
+
 import products
 import store
-import promotions
 
 def print_header(headline):
     """print header"""
@@ -12,7 +13,7 @@ def list_products(store_instance):
     """list all products in store"""
     print_header("Products in store")
     for product in store_instance.get_all_products():
-        product.show()
+        print(product)
 
 def show_amount(store_instance):
     """show total amount in store"""
@@ -26,7 +27,7 @@ def place_order(store_instance):
 
     for index, product in enumerate(shopping_list, start=1):
         print(f"{index}. ", end="")
-        product.show()
+        print(product)
 
     print("Enter the product number and quantity.")
     print("Enter an empty product number to finish.")

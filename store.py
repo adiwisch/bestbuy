@@ -1,3 +1,5 @@
+"""This module defines the Store class for the BestBuy store."""
+
 from products import Product
 
 

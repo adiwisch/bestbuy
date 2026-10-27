@@ -1,3 +1,5 @@
+"""This module defines the product classes for the BestBuy store."""
+
 from promotions import Promotion
 
 class Product:
@@ -16,19 +18,23 @@ class Product:
         self.active = True
         self.promotion = None
 
-    def get_quantity(self) -> int:
+    @property
+    def quantity(self) -> int:
         """Returns quantity of product"""
-        return self.quantity
+        return self._quantity
 
-    def set_quantity(self, quantity):
+    @quantity.setter
+    def quantity(self, quantity):
         """Sets quantity of product"""
         if quantity < 0:
             raise ValueError("Quantity cannot be negative.")
 
-        self.quantity = quantity
+        self._quantity = quantity
 
-        if self.quantity == 0:
+        if quantity == 0:
             self.deactivate()
+        else:
+            self.activate()
 
     def is_active(self) -> bool:
         """Returns whether product is active"""
@@ -71,12 +77,13 @@ class Product:
         else:
             total_price = self.price * quantity
 
-        self.set_quantity(self.quantity - quantity)
+        self.quantity = self.quantity - quantity
 
         return float(total_price)
 
     @property
     def price(self):
+        """magic getter"""
         return self._price
 
     @price.setter
@@ -87,6 +94,7 @@ class Product:
 
     @property
     def promotion(self):
+        """magic getter"""
         return self._promotion
 
     @promotion.setter
@@ -117,16 +125,20 @@ class NonStockedProduct(Product):
         if quantity <= 0:
             raise ValueError("Quantity must be greater than zero.")
 
+        if self.promotion:
+            return self.promotion.apply_promotion(self, quantity)
+
         return self.price * quantity
 
-    def show(self):
+    def __str__(self):
         """Non-stock information is shown in addition to regular product information"""
-        super().show()
-        print("This product is not stocked.")
+        return super().__str__() + "\nThis product is not stocked."
 
 class LimitedProduct(Product):
     """product with maximum order quantity"""
     def __init__(self, name, price, quantity, maximum):
+        if maximum <= 0:
+            raise ValueError("Maximum quantity must be positive.")
         super().__init__(name, price, quantity)
         self.maximum = maximum
 
@@ -139,10 +151,9 @@ class LimitedProduct(Product):
 
         return super().buy(quantity)
 
-    def show(self):
+    def __str__(self):
         """Limit information is shown in addition to regular product information"""
-        super().show()
-        print(f"Maximum quantity per order: {self.maximum}")
+        return super().__str__() + f"\nMaximum quantity per order: {self.maximum}"
 
 
 def main():
@@ -154,11 +165,11 @@ def main():
     print(mac.buy(100))
     print(mac.is_active())
 
-    bose.show()
-    mac.show()
+    print(bose)
+    print(mac)
 
-    bose.set_quantity(1000)
-    bose.show()
+    bose.quantity = 1000
+    print(bose)
 
 
 if __name__ == "__main__":

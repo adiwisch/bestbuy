@@ -1,6 +1,8 @@
+"""This module defines the promotion classes for the BestBuy store."""
+
 from abc import ABC, abstractmethod
 
-
+# pylint: disable=too-few-public-methods
 class Promotion(ABC):
     """Abstract base class for promotions"""
     def __init__(self, name):
@@ -8,12 +10,15 @@ class Promotion(ABC):
 
     @abstractmethod
     def apply_promotion(self, product, quantity) -> float:
-        pass
+        """abstract promotion application"""
+        raise NotImplementedError
 
 
 class PercentDiscount(Promotion):
     """Promotion class that applies a percent discount to products"""
     def __init__(self, name, percent):
+        if not 0 <= percent <= 100:
+            raise ValueError("Discount must be between 0 and 100 percent.")
         super().__init__(name)
         self.percent = percent
 

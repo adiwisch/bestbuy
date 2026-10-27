@@ -62,6 +62,45 @@ class Product:
 
         return float(total_price)
 
+class NonStockedProduct(Product):
+    """NonStockedProduct class (for something like licenses), stores name and price
+
+     quantity is set to 0"""
+    def __init__(self, name, price):
+        super().__init__(name, price, quantity=0)
+
+    def buy(self, quantity):
+        """Buy product - returns total price, quantity is not reduced here"""
+        if quantity <= 0:
+            raise ValueError("Quantity must be greater than zero.")
+
+        return self.price * quantity
+
+    def show(self):
+        """Non-stock information is shown in addition to regular product information"""
+        super().show()
+        print("This product is not stocked.")
+
+class LimitedProduct(Product):
+    """product with maximum order quantity"""
+    def __init__(self, name, price, quantity, maximum):
+        super().__init__(name, price, quantity)
+        self.maximum = maximum
+
+    def buy(self, quantity):
+        """Buy product - check if desired order exceeds maximum quantity, call super.buy if not"""
+        if quantity > self.maximum:
+            raise ValueError(
+                f"You can only buy up to {self.maximum} of this product."
+            )
+
+        return super().buy(quantity)
+
+    def show(self):
+        """Limit information is shown in addition to regular product information"""
+        super().show()
+        print(f"Maximum quantity per order: {self.maximum}")
+
 
 def main():
     """Main function for testing purposes"""

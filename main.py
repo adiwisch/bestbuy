@@ -101,8 +101,4 @@ if __name__ == "__main__":
     pixel = products.LimitedProduct("Google Pixel 7", price=500, quantity=250, maximum=1)
 
     best_buy = store.Store([mac, bose])
-    #mac.price = -100  # Should give error
-    print(mac)  # Should print `MacBook Air M2, Price: $1450 Quantity:100`
-    print(mac > bose)  # Should print True
-    print(mac in best_buy)  # Should print True
-    print(pixel in best_buy)  # Should print False
+    start(best_buy)
